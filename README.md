@@ -27,6 +27,6 @@ Because the non-free firmware is included, I expect the image to have generally 
 ## Known limitations
 * Actual installation requires a network at install time
 * The installation is a "frankendistro", combining some packages intended for Debian Jessie
-  (this can be changed as soon as a stretch builder is added to buildbot)
+  (this can be changed as soon as 2.7.10 is released with packages for stretch)
 * On most systems, the "preempt-rt" kernel is not suitable for software step generation
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
