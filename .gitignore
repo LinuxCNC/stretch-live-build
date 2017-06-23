@@ -1,3 +1,4 @@
-live.iso
-vmdebootstrap.log
-debootstrap.log
+*.iso
+*.log
+*.zsync
+env.sh
