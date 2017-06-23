@@ -17,15 +17,6 @@ cat /etc/resolv.conf > ${rootdir}/etc/resolv.conf
 
 prepare_apt_source "${LWR_MIRROR}" "${LWR_DISTRIBUTION}"
 
-chroot ${rootdir} apt-get -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} ${LWR_EXTRA_PACKAGES} task-laptop task-english libnss-myhostname
-
-# Temporary fix for #843983
-chroot ${rootdir} chmod 755 /
-
-echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
-
-replace_apt_source
-
 cat > ${rootdir}/etc/apt/trusted.gpg.d/linuxcnc.asc <<EOF
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -103,7 +94,16 @@ EOF
 
 chroot ${rootdir} apt-key list
 chroot ${rootdir} apt update
-chroot ${rootdir} apt install -y linuxcnc-uspace linuxcnc-uspace-dev hostmot2-firmware-all
+
+chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} ${LWR_EXTRA_PACKAGES} task-laptop task-english libnss-myhostname
+
+# Temporary fix for #843983
+chroot ${rootdir} chmod 755 /
+
+echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
+
+replace_apt_source
 
 mv ${rootdir}/etc/resolv.conf ${rootdir}/etc/resolv.conf.bak
 
+echo 1>&2 "(done with customise.sh)"
