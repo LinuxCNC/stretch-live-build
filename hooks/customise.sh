@@ -103,6 +103,9 @@ chroot ${rootdir} apt -y remove linux-image-4.9.0-3-amd64 || true
 # Temporary fix for #843983
 chroot ${rootdir} chmod 755 /
 
+chroot ${rootdir} mkdir -p /etc/skel/.config/autostart
+chroot ${rootdir} desktop-file-install --dir=/etc/skel/.config/autostart --set-key=Hidden --set-value=true /etc/xdg/autostart/light-locker.desktop
+
 echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
 
 replace_apt_source
