@@ -20,6 +20,10 @@ Because the non-free firmware is included, I expect the image to have generally 
 * installs into a 20GB virtual hard drive, using "one filesystem" partitioning.  Installed system has rt kernel and linuxcnc package
 * Boots off a 32GB USB stick (copy with 'dd')
 
+## Important notes
+* The live user's name/password is user/live.  Use this if the screen locker activates.
+* When installing, enter blank for the root password (twice) so that the initial user can use 'sudo' to become root
+
 ## Known limitations
 * Actual installation requires a network at install time
 * The installation is a "frankendistro", combining some packages intended for Debian Jessie
