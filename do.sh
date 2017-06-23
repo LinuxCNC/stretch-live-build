@@ -18,7 +18,7 @@ for ARCH in "$@"; do
     TARGET="$LOCATION/linuxcnc-stretch-uspace-$ARCH.iso"
     lwr -o "$TARGET" \
         --architecture=$ARCH \
-        -t live-task-xfce \
+        -t "live-task-base task-xfce-desktop" \
         -e "linux-image-rt-$KARCH linux-headers-rt-$KARCH firmware-linux \
             linuxcnc-uspace linuxcnc-uspace-dev hostmot2-firmware-all" \
         --description="Unofficial LinuxCNC 'Stretch' $ARCH Live/Install"
