@@ -10,6 +10,8 @@ Developing works best if you use a caching proxy.
 I use squid-deb-proxy and set up env.sh with the line `export http_proxy=http://localhost:8001/` to enable its use while lwr runs.
 Other proxy choices such as apt-cacher, apt-cacher-ng, and apt-proxy appear to be incompatible with `live-wrapper`.
 squid-deb-proxy must additionally be reconfigured to allow it to access linuxcnc.org.
+See `etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` in the source tree for such a file
+(copy to `/etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` and restart squid-deb-proxy to use)
 
 ## Current status
 This is essentially untested.  It will probably let your chickes out of the coop, make your goats' milk sour, etc.
@@ -24,8 +26,9 @@ Because the non-free firmware is included, I expect the image to have generally 
 * Boots off a 32GB USB stick (copy with 'dd')
 
 ## Important notes
-* The live user's name/password is user/live.  Use this if the screen locker activates.
+* The live user's name/password is user/live.
 * When installing, enter blank for the root password (twice) so that the initial user can use 'sudo' to become root
+* The screen locker (live-locker) is disabled by default.  You can reenable it by via Session and Startup after installation.
 
 ## Known limitations
 * Actual installation requires a network at install time
