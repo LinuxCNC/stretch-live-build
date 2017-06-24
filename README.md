@@ -29,6 +29,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 * The live user's name/password is user/live.
 * When installing, enter blank for the root password (twice) so that the initial user can use 'sudo' to become root
 * The screen locker (live-locker) is disabled by default.  You can reenable it by via Session and Startup after installation.
+* At the live boot prompt, you can edit the kernel commandline by pressing ctrl-i.  This can be useful for example to enter an `isolcpus=` value.
 
 ## Known limitations
 * Actual installation requires a network at install time
