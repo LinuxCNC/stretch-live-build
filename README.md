@@ -1,13 +1,13 @@
 # stretch-live-build
 Scripts supporting the build of the linuxcnc stretch live cd image
 
-When run on a Debian Stretch amd64 system, this produces an approximately 2GB image that can be booted via USB.
+When run on a Debian Stretch amd64 system, this produces an approximately 1.1GB image that can be booted via USB.
 It includes the 64-bit "preempt-rt" kernel, the latest linuxcnc 2.7.x "uspace" release, and uses the xfce desktop.
 
 It requires the `live-wrapper` package to build (stretch or newer).
 
 Developing works best if you use a caching proxy.
-I use squid-deb-proxy and set up env.sh with the line `export http_proxy=http://localhost:8001/` to enable its use while lwr runs.
+I use squid-deb-proxy and set up env.sh with the line `export http_proxy=http://localhost:8000/` to enable its use while lwr runs.
 Other proxy choices such as apt-cacher, apt-cacher-ng, and apt-proxy appear to be incompatible with `live-wrapper`.
 squid-deb-proxy must additionally be reconfigured to allow it to access linuxcnc.org.
 See `etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` in the source tree for such a file
@@ -37,3 +37,4 @@ Because the non-free firmware is included, I expect the image to have generally 
   (this can be changed as soon as 2.7.10 is released with packages for stretch)
 * On most systems, the "preempt-rt" kernel is not suitable for software step generation
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
+* Language packs are not included, because they caused a large increase in the download size (1.1GB -> 2GB)
