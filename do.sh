@@ -20,6 +20,7 @@ for ARCH in "$@"; do
         --architecture=$ARCH \
         -t "live-task-base task-xfce-desktop" \
         -e "linux-image-rt-$KARCH linux-headers-rt-$KARCH firmware-linux \
-            linuxcnc-uspace linuxcnc-uspace-dev hostmot2-firmware-all" \
+            linuxcnc-uspace linuxcnc-uspace-dev hostmot2-firmware-all \
+            f-engrave hostmot2-firmware-all mesaflash truetype-tracer" \
         --description="Unofficial LinuxCNC 'Stretch' $ARCH Live/Install"
 done

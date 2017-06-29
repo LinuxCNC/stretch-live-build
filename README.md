@@ -33,8 +33,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 
 ## Known limitations
 * Actual installation requires a network at install time
-* The installation is a "frankendistro", combining some packages intended for Debian Jessie
-  (this can be changed as soon as 2.7.10 is released with packages for stretch)
+* The installation uses packages from buildbot, not released versions.  After 2.7.10 is released, you can use synaptic package manager to change to the released version.
 * On most systems, the "preempt-rt" kernel is not suitable for software step generation
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
 * Language packs are not included, because they caused a large increase in the download size (1.1GB -> 2GB)

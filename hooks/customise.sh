@@ -82,14 +82,12 @@ y9wrl8IUhViDfuiHeaVG2tHX6bEdMAey9rPGHO7z+/i4VYj7X2s=
 EOF
 
 cat > ${rootdir}/etc/apt/sources.list.d/linuxcnc.list <<EOF
-# This creates a frankendistro which is mostly stretch but
-# contains items from jessie as well to support LinuxCNC
-deb http://linuxcnc.org/ jessie base 2.7-uspace
-deb-src http://linuxcnc.org/ jessie base 2.7-uspace
-deb http://ftp.us.debian.org/debian/ jessie main
-deb-src http://ftp.us.debian.org/debian/ jessie main
-deb http://ftp.us.debian.org/debian/ jessie-updates main
-deb-src http://ftp.us.debian.org/debian/ jessie-updates main
+deb http://linuxcnc.org/ stretch base
+deb-src http://linuxcnc.org/ stretch base
+#deb http://linuxcnc.org/ stretch 2.7-uspace
+#deb-src http://linuxcnc.org/ stretch 2.7-uspace
+deb http://buildbot.linuxcnc.org/ stretch 2.7-rtpreempt
+deb-src http://buildbot.linuxcnc.org/ stretch 2.7-rtpreempt
 EOF
 
 chroot ${rootdir} apt-key list
