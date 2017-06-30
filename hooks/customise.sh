@@ -91,6 +91,11 @@ y9wrl8IUhViDfuiHeaVG2tHX6bEdMAey9rPGHO7z+/i4VYj7X2s=
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
 
+cat > ${rootdir}/etc/apt/sources.list.d/updates.list <<EOF
+deb http://ftp.debian.org/debian stretch-updates main contrib non-free
+deb http://security.debian.org/debian-security stretch/updates main
+EOF
+
 cat > ${rootdir}/etc/apt/sources.list.d/linuxcnc.list <<EOF
 deb http://linuxcnc.org/ stretch base
 deb-src http://linuxcnc.org/ stretch base
@@ -117,6 +122,9 @@ chroot ${rootdir} desktop-file-install --dir=/etc/skel/.config/autostart --set-k
 fi
 
 echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
+
+# (will be reconfigured in installer)
+rm ${rootdir}/etc/apt/sources.list.d/updates.list
 
 replace_apt_source
 
