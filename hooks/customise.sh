@@ -123,6 +123,9 @@ fi
 
 echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
 
+# (don't want the same keys every time do we!)
+rm -f ${rootdir}/etc/ssh/*_key ${rootdir}/etc/ssh/*_key.pub
+
 # (will be reconfigured in installer)
 rm ${rootdir}/etc/apt/sources.list.d/updates.list
 
