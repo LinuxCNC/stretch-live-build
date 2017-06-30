@@ -30,7 +30,7 @@ for ARCH in "$@"; do
         -f "dns323-firmware-tools expeyes-firmware-dev firmware-linux-free \
             hdmi2usb-fx2-firmware nxt-firmware \
             sigrok-firmware-fx2lafw ubertooth-firmware \
-            ubertooth-firmware-source alsa-firmware-loaders \
+            alsa-firmware-loaders \
             bladerf-firmware-fx3 firmware-b43-installer \
             firmware-b43legacy-installer isight-firmware-tools microcode.ctl \
             amd64-microcode atmel-firmware bluez-firmware \
