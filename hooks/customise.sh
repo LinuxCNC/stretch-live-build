@@ -98,11 +98,11 @@ EOF
 
 cat > ${rootdir}/etc/apt/sources.list.d/linuxcnc.list <<EOF
 deb http://linuxcnc.org/ stretch base
-deb-src http://linuxcnc.org/ stretch base
+#deb-src http://linuxcnc.org/ stretch base
 #deb http://linuxcnc.org/ stretch 2.7-uspace
 #deb-src http://linuxcnc.org/ stretch 2.7-uspace
 deb http://buildbot.linuxcnc.org/ stretch 2.7-rtpreempt
-deb-src http://buildbot.linuxcnc.org/ stretch 2.7-rtpreempt
+#deb-src http://buildbot.linuxcnc.org/ stretch 2.7-rtpreempt
 EOF
 
 chroot ${rootdir} apt-key list
