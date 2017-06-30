@@ -37,3 +37,4 @@ Because the non-free firmware is included, I expect the image to have generally 
 * On most systems, the "preempt-rt" kernel is not suitable for software step generation
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
 * Language packs are not included, because they caused a large increase in the download size (1.1GB -> 2GB)
+* If you specify a different temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`
