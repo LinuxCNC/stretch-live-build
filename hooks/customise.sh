@@ -110,8 +110,8 @@ chroot ${rootdir} apt update
 
 chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} ${LWR_EXTRA_PACKAGES} ${LWR_FIRMWARE_PACKAGES} task-laptop task-english libnss-myhostname
 
-chroot ${rootdir} apt -y remove linux-image-4.9.0-3-686 || true
-chroot ${rootdir} apt -y remove linux-image-4.9.0-3-amd64 || true
+chroot ${rootdir} apt -y remove --purge linux-image-4.9.0-3-686 || true
+chroot ${rootdir} apt -y remove --purge linux-image-4.9.0-3-amd64 || true
 
 # Temporary fix for #843983
 chroot ${rootdir} chmod 755 /
