@@ -23,9 +23,8 @@ cat /etc/resolv.conf > ${rootdir}/etc/resolv.conf
 prepare_apt_source "${LWR_MIRROR}" "${LWR_DISTRIBUTION}"
 
 for PKG in ${LWR_FIRMWARE_PACKAGES}; do
-    echo "$PKG        $PKG/license/accepted       boolean true" | \
-       chroot ${rootdir} debconf-set-selections
-done
+    echo "$PKG        $PKG/license/accepted       boolean true"
+done | chroot ${rootdir} debconf-set-selections
 
 cat > ${rootdir}/etc/apt/trusted.gpg.d/linuxcnc.asc <<EOF
 -----BEGIN PGP PUBLIC KEY BLOCK-----
