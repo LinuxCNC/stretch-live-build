@@ -1,11 +1,16 @@
 #!/bin/bash
 
 set -e
-
+set -x
 rootdir=$1
 
 # common needs rootdir to already be defined.
 . /usr/share/vmdebootstrap/common/customise.lib
+
+cleanup() {
+    umount -l ${rootdir}/proc
+    umount -l ${rootdir}/sys
+}
 
 trap cleanup 0
 
@@ -16,6 +21,11 @@ mv ${rootdir}/etc/resolv.conf ${rootdir}/etc/resolv.conf.bak
 cat /etc/resolv.conf > ${rootdir}/etc/resolv.conf
 
 prepare_apt_source "${LWR_MIRROR}" "${LWR_DISTRIBUTION}"
+
+for PKG in ${LWR_FIRMWARE_PACKAGES}; do
+    echo "$PKG        $PKG/license/accepted       boolean true" | \
+       chroot ${rootdir} debconf-set-selections
+done
 
 cat > ${rootdir}/etc/apt/trusted.gpg.d/linuxcnc.asc <<EOF
 -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -93,7 +103,7 @@ EOF
 chroot ${rootdir} apt-key list
 chroot ${rootdir} apt update
 
-chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} ${LWR_EXTRA_PACKAGES} task-laptop task-english libnss-myhostname
+chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} ${LWR_EXTRA_PACKAGES} ${LWR_FIRMWARE_PACKAGES} task-laptop task-english libnss-myhostname
 
 chroot ${rootdir} apt -y remove linux-image-4.9.0-3-686 || true
 chroot ${rootdir} apt -y remove linux-image-4.9.0-3-amd64 || true
