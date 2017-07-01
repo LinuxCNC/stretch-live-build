@@ -128,6 +128,11 @@ fs.protected_symlinks=0
 kernel.perf_event_paranoid=-1
 EOF
 
+cat >> $rootdir/etc/adduser.conf <<EOF
+EXTRA_GROUPS="dialout cdrom floppy audio video plugdev users"
+ADD_EXTRA_GROUPS=1
+EOF
+
 # (don't want the same keys every time do we!)
 rm -f ${rootdir}/etc/ssh/*_key ${rootdir}/etc/ssh/*_key.pub
 
