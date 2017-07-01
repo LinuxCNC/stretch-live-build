@@ -120,6 +120,14 @@ fi
 
 echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
 
+cat > $rootdir/etc/sysctl.d/noparanoid.conf <<EOF
+kernel.dmesg_restrict = 0
+kernel.sysrq=1
+fs.protected_hardlinks=0
+fs.protected_symlinks=0
+kernel.perf_event_paranoid=-1
+EOF
+
 # (don't want the same keys every time do we!)
 rm -f ${rootdir}/etc/ssh/*_key ${rootdir}/etc/ssh/*_key.pub
 
