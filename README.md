@@ -41,4 +41,3 @@ Because the non-free firmware is included, I expect the image to have generally 
 * Use of serial devices (e.g., modbus) is likely to not work.  Fix it with `sudo useradd $(id -nu) dialout` and restarting or logging out and back in again.
 * There's no update notifier (I don't think)
 * could use a few more goodies, like: glxgears, nopaste, …
-* may need build-essential for halcompile to work

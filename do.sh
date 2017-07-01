@@ -27,7 +27,7 @@ for ARCH in "$@"; do
         -e "linux-image-rt-$KARCH linux-headers-rt-$KARCH \
             linuxcnc-uspace linuxcnc-uspace-dev linuxcnc-doc-en \
             f-engrave hostmot2-firmware-all mesaflash truetype-tracer \
-            bash-completion openssh-server" \
+            bash-completion openssh-server build-essential" \
         -f "dns323-firmware-tools firmware-linux-free \
             hdmi2usb-fx2-firmware nxt-firmware \
             sigrok-firmware-fx2lafw ubertooth-firmware \
