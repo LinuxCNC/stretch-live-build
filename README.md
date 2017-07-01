@@ -40,4 +40,3 @@ Because the non-free firmware is included, I expect the image to have generally 
 * If you specify a different temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`.  (Workaround: you can use temporary directories like `/tmp/shm` and carefully symlink or bind-mount)
 * Use of serial devices (e.g., modbus) is likely to not work.  Fix it with `sudo useradd $(id -nu) dialout` and restarting or logging out and back in again.
 * There's no update notifier (I don't think)
-* could use a few more goodies, like: glxgears, nopaste, …
