@@ -31,21 +31,19 @@ for ARCH in "$@"; do
             f-engrave hostmot2-firmware-all mesaflash truetype-tracer \
             bash-completion openssh-server build-essential \
             nopaste mesa-utils" \
-        -f "dns323-firmware-tools firmware-linux-free \
+        -f "firmware-linux-free \
             hdmi2usb-fx2-firmware nxt-firmware \
-            sigrok-firmware-fx2lafw ubertooth-firmware \
-            alsa-firmware-loaders \
             bladerf-firmware-fx3 firmware-b43-installer \
-            firmware-b43legacy-installer isight-firmware-tools microcode.ctl \
+            firmware-b43legacy-installer \
             amd64-microcode atmel-firmware bluez-firmware \
-            dahdi-firmware-nonfree firmware-amd-graphics firmware-atheros \
+            firmware-amd-graphics firmware-atheros \
             firmware-bnx2 firmware-bnx2x firmware-brcm80211 firmware-cavium \
-            firmware-crystalhd firmware-intel-sound firmware-intelwimax \
-            firmware-ipw2x00 firmware-ivtv firmware-iwlwifi firmware-libertas \
-            firmware-linux firmware-linux-nonfree firmware-misc-nonfree \
+            firmware-intelwimax \
+            firmware-ipw2x00 firmware-iwlwifi firmware-libertas \
+            firmware-linux \
             firmware-myricom firmware-netxen firmware-qlogic firmware-realtek \
-            firmware-samsung firmware-siano firmware-ti-connectivity \
-            firmware-zd1211 intel-microcode midisport-firmware" \
+            firmware-ti-connectivity \
+            firmware-zd1211 intel-microcode" \
         --description="Unofficial LinuxCNC 'Stretch' $ARCH Live/Install"
 # Note: firmware-ipw2x00 cannot be installed because it requires the user to agree to something during install time
 done
