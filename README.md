@@ -42,9 +42,9 @@ Because the non-free firmware is included, I expect the image to have generally 
 * You can select a different task by editing `do.sh`: Find the `-t ... task-xfce-desktop` line.  Remove it and replace it with the task you want (e.g., `task-kde-desktop`).
 * Build the image with `./do.sh`.  Specify `./do.sh i386` or `./do.sh amd64` to generate just one of the two images.  If there's already an image there, remove it with `rm -f` before invoking `do.sh`.
 * Using a caching proxy greatly speeds image generation
-** I use squid-deb-proxy and set up env.sh with the line `export http_proxy=http://localhost:8000/` to enable its use while lwr runs.
-** squid-deb-proxy must additionally be reconfigured to allow it to access linuxcnc.org.  See `etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` in the source tree for such a file (copy to `/etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` and restart squid-deb-proxy to use)
-** Other proxy choices such as apt-cacher, apt-cacher-ng, and apt-proxy appear to be incompatible with `live-wrapper`.
+  * I use squid-deb-proxy and set up env.sh with the line `export http_proxy=http://localhost:8000/` to enable its use while lwr runs.
+  * squid-deb-proxy must additionally be reconfigured to allow it to access linuxcnc.org.  See `etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` in the source tree for such a file (copy to `/etc/squid-deb-proxy/mirror-dstdomain.acl.d/99-linuxcnc` and restart squid-deb-proxy to use)
+  * Other proxy choices such as apt-cacher, apt-cacher-ng, and apt-proxy appear to be incompatible with `live-wrapper`.
 * Using a modified version of mksquashfs greatly speeds image generation
-** An experimental patch is available at `etc/mksquashfs-compression-cache.patch`
-** However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automaticlaly
+  * An experimental patch is available at `etc/mksquashfs-compression-cache.patch`
+  * However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automaticlaly
