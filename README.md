@@ -48,3 +48,12 @@ Because the non-free firmware is included, I expect the image to have generally 
 * Using a modified version of mksquashfs greatly speeds image generation
   * An experimental patch is available at `etc/mksquashfs-compression-cache.patch`
   * However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automaticlaly
+
+## Experimental persistence
+Debian Live supports keeping files you add and change on the USB drive ("persistence"):
+* use `fdisk` to add a new partition (skip supposedly unpartitioned space)
+* `mkfs.ext4 /dev/sdXY -L persistence`
+* mount it and write to `persistence.conf`: `/ union=source=rootfs`
+* edit commandline to specify "persistence" (have to do this each time argh) (if this works out for people, we can make it default)
+
+See also: [`persistence.conf(4)`](https://manpages.debian.org/stretch/live-boot-doc/persistence.conf.5.en.html)
