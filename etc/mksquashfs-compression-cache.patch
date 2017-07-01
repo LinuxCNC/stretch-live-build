@@ -1,0 +1,192 @@
+Index: squashfs-tools-4.3/debian/control
+===================================================================
+--- squashfs-tools-4.3.orig/debian/control
++++ squashfs-tools-4.3/debian/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+ Uploaders: Filesystems Group <filesystems-devel@lists.alioth.debian.org>
+ Build-Depends:
+- debhelper (>= 9), libattr1-dev, liblzma-dev, liblzo2-dev, liblz4-dev, zlib1g-dev
++ debhelper (>= 9), libattr1-dev, liblzma-dev, liblzo2-dev, liblz4-dev, zlib1g-dev, librhash-dev
+ Standards-Version: 3.9.6
+ Homepage: http://squashfs.sourceforge.net/
+ 
+Index: squashfs-tools-4.3/squashfs-tools/Makefile
+===================================================================
+--- squashfs-tools-4.3.orig/squashfs-tools/Makefile
++++ squashfs-tools-4.3/squashfs-tools/Makefile
+@@ -153,7 +153,7 @@ ifeq ($(XZ_SUPPORT),1)
+ CFLAGS += -DXZ_SUPPORT
+ MKSQUASHFS_OBJS += xz_wrapper.o
+ UNSQUASHFS_OBJS += xz_wrapper.o
+-LIBS += -llzma
++LIBS += -llzma -lrhash
+ COMPRESSORS += xz
+ endif
+ 
+Index: squashfs-tools-4.3/squashfs-tools/xz_wrapper.c
+===================================================================
+--- squashfs-tools-4.3.orig/squashfs-tools/xz_wrapper.c
++++ squashfs-tools-4.3/squashfs-tools/xz_wrapper.c
+@@ -22,14 +22,62 @@
+  * http://tukaani.org/xz/
+  */
+ 
++#include <assert.h>
++#include <errno.h>
++#include <fcntl.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdlib.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <unistd.h>
+ #include <lzma.h>
++#include <rhash.h>
+ 
+ #include "squashfs_fs.h"
+ #include "xz_wrapper.h"
+ #include "compressor.h"
++#include "error.h"
++
++static int read_bytes(int fd, void *buff, int bytes)
++{
++	int res, count;
++
++	for(count = 0; count < bytes; count += res) {
++		res = read(fd, buff + count, bytes - count);
++		if(res < 1) {
++			if(res == 0)
++				goto bytes_read;
++			else if(errno != EINTR) {
++				ERROR("Read failed because %s\n",
++						strerror(errno));
++				return -1;
++			} else
++				res = 0;
++		}
++	}
++
++bytes_read:
++	return count;
++}
++
++static int write_bytes(int fd, const void *buff, int bytes) {
++	int res, count;
++
++	for(count = 0; count < bytes; count += res) {
++		res = write(fd, buff + count, bytes - count);
++		if(res == -1) {
++			if(errno != EINTR) {
++				ERROR("Write failed because %s\n",
++						strerror(errno));
++				return -1;
++			}
++			res = 0;
++		}
++	}
++
++	return 0;
++}
+ 
+ static struct bcj bcj[] = {
+ 	{ "x86", LZMA_FILTER_X86, 0 },
+@@ -432,6 +480,71 @@ failed:
+ 	return -1;
+ }
+ 
++static void hash_block(const void *message, size_t message_size,
++	char *hash_out, size_t hash_size)
++{
++	struct rhash_context *ctx;
++        assert(rhash_get_hash_length(RHASH_SHA256) < hash_size);
++
++	ctx = rhash_init(RHASH_SHA256);
++	rhash_update(ctx, (const unsigned char *)message, message_size);
++	rhash_final(ctx, 0);
++	rhash_print(hash_out, ctx, 0, RHPR_UPPERCASE);
++	rhash_free(ctx);
++}
++
++static char *kvstore_filename_by_hash(const char *hash, const char *suffix,
++	char *filename_out, size_t filename_size)
++{
++	snprintf(filename_out, filename_size, "%s/.cache/squashfs.%s%s",
++		getenv("HOME"), hash, suffix);
++	return filename_out;
++}
++
++static char *kvstore_find_block_by_hash(const char *hash, size_t *size_out)
++{
++	int fd;
++	char filename[65536];
++	char *result;
++	struct stat st;
++
++	fd = open(kvstore_filename_by_hash(hash, "",
++				filename, sizeof(filename)), O_RDONLY);
++	if(fd < 0) return NULL;
++
++	if(fstat(fd, &st) < 0) {
++		close(fd);
++		return NULL;
++	}
++
++	*size_out = (size_t)st.st_size;
++
++	result = malloc(*size_out);
++	read_bytes(fd, result, *size_out);
++
++	close(fd);
++	return result;
++}
++
++static void kvstore_store_block_by_hash(const char *hash, const void *data,
++	size_t data_size)
++{
++	char tmp_filename[65536], final_filename[65536];
++	int fd = open(kvstore_filename_by_hash(hash, ".tmp",
++				tmp_filename, sizeof(tmp_filename)),
++			O_WRONLY | O_CREAT | O_EXCL, 0666);
++	if(fd < 0) return;
++
++	if(write_bytes(fd, data, data_size) < 0) {
++		close(fd);
++		unlink(tmp_filename);
++	}
++	rename(tmp_filename, kvstore_filename_by_hash(hash, "",
++				final_filename, sizeof(final_filename)));
++
++	close(fd);
++}
++
+ 
+ static int xz_compress(void *strm, void *dest, void *src,  int size,
+ 	int block_size, int *error)
+@@ -440,6 +553,17 @@ static int xz_compress(void *strm, void
+         lzma_ret res = 0;
+ 	struct xz_stream *stream = strm;
+ 	struct filter *selected = NULL;
++	void *cached = NULL;
++	size_t cached_size = 0;
++	char hash[130];
++
++	hash_block(src, size, hash, sizeof(hash));
++
++	if((cached = kvstore_find_block_by_hash(hash, &cached_size))) {
++		memcpy(dest, cached, cached_size);
++		free(cached);
++		return (int) cached_size;
++	}
+ 
+ 	stream->filter[0].buffer = dest;
+ 
+@@ -472,6 +596,8 @@ static int xz_compress(void *strm, void
+ 	if(selected->buffer != dest)
+ 		memcpy(dest, selected->buffer, selected->length);
+ 
++	kvstore_store_block_by_hash(hash, selected->buffer, selected->length);
++
+ 	return (int) selected->length;
+ 
+ failed:
