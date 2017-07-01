@@ -26,7 +26,7 @@ for ARCH in "$@"; do
         --kernel=linux-image-rt-$KARCH \
         --preseed=preseed.cfg \
         -t "live-task-base task-xfce-desktop" \
-        -e "linux-headers-rt-$KARCH \
+        -e "linux-headers-rt-$KARCH linux-perf \
             linuxcnc-uspace linuxcnc-uspace-dev linuxcnc-doc-en \
             f-engrave hostmot2-firmware-all mesaflash truetype-tracer \
             bash-completion openssh-server build-essential \
