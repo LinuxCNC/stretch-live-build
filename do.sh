@@ -45,5 +45,4 @@ for ARCH in "$@"; do
             firmware-ti-connectivity \
             firmware-zd1211 intel-microcode" \
         --description="Unofficial LinuxCNC 'Stretch' $ARCH Live/Install"
-# Note: firmware-ipw2x00 cannot be installed because it requires the user to agree to something during install time
 done
