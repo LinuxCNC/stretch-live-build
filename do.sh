@@ -24,6 +24,7 @@ for ARCH in "$@"; do
         --architecture=$ARCH \
         --customise="$LOCATION/hooks/customise.sh" \
         --kernel=linux-image-rt-$KARCH \
+        --preseed=preseed.cfg \
         -t "live-task-base task-xfce-desktop" \
         -e "linux-headers-rt-$KARCH \
             linuxcnc-uspace linuxcnc-uspace-dev linuxcnc-doc-en \

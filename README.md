@@ -27,7 +27,6 @@ Because the non-free firmware is included, I expect the image to have generally 
 
 ## Important notes
 * The live user's name/password is user/live.
-* When installing, enter blank for the root password (twice) so that the initial user can use 'sudo' to become root
 * The screen locker (live-locker) is disabled by default.  You can reenable it by via Session and Startup after installation.
 * At the live boot prompt, you can edit the kernel commandline by pressing ctrl-i.  This can be useful for example to enter an `isolcpus=` value.
 
@@ -38,5 +37,5 @@ Because the non-free firmware is included, I expect the image to have generally 
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
 * Language packs are not included, because they caused a large increase in the download size (1.1GB -> 2GB)
 * If you specify a different temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`.  (Workaround: you can use temporary directories like `/tmp/shm` and carefully symlink or bind-mount)
-* Use of serial devices (e.g., modbus) is likely to not work.  Fix it with `sudo useradd $(id -nu) dialout` and restarting or logging out and back in again.
+* Use of serial devices (e.g., modbus) is likely to not work on the live image.
 * There's no update notifier (I don't think)
