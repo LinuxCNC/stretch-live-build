@@ -47,7 +47,7 @@ Because the non-free firmware is included, I expect the image to have generally 
   * Other proxy choices such as apt-cacher, apt-cacher-ng, and apt-proxy appear to be incompatible with `live-wrapper`.
 * Using a modified version of mksquashfs greatly speeds image generation
   * An experimental patch is available at `etc/mksquashfs-compression-cache.patch`
-  * However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automaticlaly
+  * However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automatically
 
 ## Experimental persistence
 Debian Live supports keeping files you add and change on the USB drive ("persistence"):
