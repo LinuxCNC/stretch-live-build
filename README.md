@@ -22,7 +22,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 ## Important notes
 * The live user's name/password is user/live.
 * The screen locker (live-locker) is disabled by default.  You can reenable it by via Session and Startup after installation.
-* At the live boot prompt, you can edit the kernel commandline by pressing ctrl-i.  This can be useful for example to enter an `isolcpus=` value.
+* At the live boot prompt, you can edit the kernel commandline by pressing ctrl-i (booted with bios/syslinux) or e (booted with non-secure UEFI/GRUB).  This can be useful for example to enter an `isolcpus=` value.
 * After installation, root access is via "sudo" with the user's password.  You can configure root access with "su" and a separate root password via "sudo passwd root".
 * openssh-server is installed and activated by default.  This means you should only run the live image on a trusted network, and you should set a good password when installing.
 
