@@ -106,6 +106,7 @@ EOF
 
 chroot ${rootdir} apt-key list
 chroot ${rootdir} apt update
+chroot ${rootdir} apt -y dist-upgrade
 
 chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} task-laptop task-english libnss-myhostname
 chroot ${rootdir} apt -y install --no-install-recommends ${LWR_EXTRA_PACKAGES} ${LWR_FIRMWARE_PACKAGES}
