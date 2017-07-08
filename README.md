@@ -53,7 +53,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 Debian Live supports keeping files you add and change on the USB drive ("persistence"):
 * use `fdisk` to add a new partition (skip supposedly unpartitioned space)
 * `mkfs.ext4 /dev/sdXY -L persistence`
-* mount it and write to `persistence.conf`: `/ union=source=rootfs`
+* mount it and write to `persistence.conf`: `/ union,source=rootfs`
 * in the unlikely event that you have a partition lableled `persistence` for some other purpose, you have to choose the second menu item to disable persistence.
 
 See also: [`persistence.conf(4)`](https://manpages.debian.org/stretch/live-boot-doc/persistence.conf.5.en.html)
