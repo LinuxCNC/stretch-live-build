@@ -120,6 +120,7 @@ chroot ${rootdir} desktop-file-install --dir=/etc/skel/.config/autostart --set-k
 fi
 
 echo "blacklist bochs-drm" > $rootdir/etc/modprobe.d/qemu-blacklist.conf
+echo "letter" > $rootdir/etc/papersize
 
 cat > $rootdir/etc/sysctl.d/noparanoid.conf <<EOF
 kernel.dmesg_restrict = 0
