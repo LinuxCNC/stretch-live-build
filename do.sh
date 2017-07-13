@@ -25,7 +25,7 @@ for ARCH in "$@"; do
         --customise="$LOCATION/hooks/customise.sh" \
         --kernel=linux-image-rt-$KARCH \
         --preseed=preseed.cfg \
-        -t "live-task-base task-xfce-desktop" \
+        -t "live-task-base task-xfce-desktop task-print-server" \
         -e "linux-headers-rt-$KARCH linux-perf \
             linuxcnc-uspace linuxcnc-uspace-dev linuxcnc-doc-en \
             f-engrave hostmot2-firmware-all mesaflash truetype-tracer \
