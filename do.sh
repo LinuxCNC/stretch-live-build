@@ -30,7 +30,7 @@ for ARCH in "$@"; do
             linuxcnc-uspace linuxcnc-uspace-dev linuxcnc-doc-en \
             f-engrave hostmot2-firmware-all mesaflash truetype-tracer \
             bash-completion openssh-server build-essential \
-            nopaste mesa-utils gparted vim-gtk3" \
+            nopaste mesa-utils gparted vim-gtk3 galculator" \
         -f "firmware-linux-free \
             hdmi2usb-fx2-firmware nxt-firmware \
             bladerf-firmware-fx3 firmware-b43-installer \
