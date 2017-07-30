@@ -28,11 +28,9 @@ Because the non-free firmware is included, I expect the image to have generally 
 
 ## Known limitations
 * Actual installation requires a network at install time
-* The installation uses packages from buildbot, not released versions.  After 2.7.10 is released, you can use synaptic package manager to change to the released version.
 * On most systems, the "preempt-rt" kernel is not suitable for software step generation
 * on a 20GB virtual hard drive, the "separate partitions" method failed, I think because the disk filled
 * Language packs are not included, because they caused a large increase in the download size
-* If you specify `/dev/shm` as the temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`.  (Workaround: you can use temporary directories like `/tmp/shm` and carefully symlink or bind-mount)
 * There's no update notifier
 
 ## Hacking on it
@@ -48,6 +46,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 * Using a modified version of mksquashfs greatly speeds image generation
   * An experimental patch is available at `etc/mksquashfs-compression-cache.patch`
   * However, this will also cause a growing cache of compressed blocks in `~root/.cache` which is never cleaned automatically
+* If you specify `/dev/shm` as the temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`.  (Workaround: you can use temporary directories like `/tmp/shm` and carefully symlink or bind-mount)
 
 ## Experimental persistence
 Debian Live supports keeping files you add and change on the USB drive ("persistence"):
