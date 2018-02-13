@@ -52,6 +52,7 @@ Because the non-free firmware is included, I expect the image to have generally 
 Debian Live supports keeping files you add and change on the USB drive ("persistence").  With persistence, you can keep your machine configurations and settings on the USB drive, rather than installing LinuxCNC permanently to the hard drive.  Depending on the capacity of the USB drive, you can even build LinuxCNC from source.
 
 An 8GB USB drive leaves about 6GB free for your configurations, documents, additional packages, etc.
+About 2/3 of this space will be used if you install LinuxCNC build-deps and source, and add a 1GB swap partition.
 
 Perform these setup steps once as root:
 * use `fdisk /dev/sdX` to add a new partition for your root filestystem, and optionally for a swap file.  (note that the first partition labeled "Empty" is actually the live image, don't modify or delete it).  At this point you may need to `partprobe` or reboot for the new partition to be available.
