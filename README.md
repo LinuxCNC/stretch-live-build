@@ -54,7 +54,7 @@ Debian Live supports keeping files you add and change on the USB drive ("persist
 An 8GB USB drive leaves about 6GB free for your configurations, documents, additional packages, etc.
 
 Perform these setup steps once as root:
-* use `fdisk /dev/sdX` to add a new partition (note that the first partition labeled "Empty" is actually the live image, don't modify or delete it).  At this point you may need to `partprobe` or reboot for the new partition to be available.
+* use `fdisk /dev/sdX` to add a new partition for your root filestystem, and optionally for a swap file.  (note that the first partition labeled "Empty" is actually the live image, don't modify or delete it).  At this point you may need to `partprobe` or reboot for the new partition to be available.
 * `mkfs.ext4 /dev/sdXY -L persistence`
 * mount it and write to `persistence.conf`: `/ union,source=rootfs`
 * in the unlikely event that you have a partition lableled `persistence` for some other purpose, you have to choose the second menu item to disable persistence.
@@ -71,5 +71,8 @@ deb http://security.debian.org/debian-security stretch/updates main
 ~~~~
 Failing to do this can lead to weird problems where packages are not installable via apt due to dependency problems.
 (An equivalent step is automatically done by the installer when actually installing to the hard drive, but it appears to be necessary to do it manually when using persistence)
+
+Depending on your system details, you may need to create and enable a swap file or swap partition.
+In order of preference, it's probably best to use a swap partition, okay to use a swap file in /lib/live/mount/persistence/sdXX, and worst to use a swap file  in /.
 
 See also: [`persistence.conf(4)`](https://manpages.debian.org/stretch/live-boot-doc/persistence.conf.5.en.html)
