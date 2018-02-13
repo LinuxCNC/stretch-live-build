@@ -49,10 +49,27 @@ Because the non-free firmware is included, I expect the image to have generally 
 * If you specify `/dev/shm` as the temporary directory in `env.sh` the resulting image can't install, because it looks for files like `/dev/shmpool/main/….deb`.  (Workaround: you can use temporary directories like `/tmp/shm` and carefully symlink or bind-mount)
 
 ## Experimental persistence
-Debian Live supports keeping files you add and change on the USB drive ("persistence"):
-* use `fdisk` to add a new partition (skip supposedly unpartitioned space)
+Debian Live supports keeping files you add and change on the USB drive ("persistence").  With persistence, you can keep your machine configurations and settings on the USB drive, rather than installing LinuxCNC permanently to the hard drive.  Depending on the capacity of the USB drive, you can even build LinuxCNC from source.
+
+An 8GB USB drive leaves about 6GB free for your configurations, documents, additional packages, etc.
+
+Perform these setup steps once as root:
+* use `fdisk /dev/sdX` to add a new partition (note that the first partition labeled "Empty" is actually the live image, don't modify or delete it).  At this point you may need to `partprobe` or reboot for the new partition to be available.
 * `mkfs.ext4 /dev/sdXY -L persistence`
 * mount it and write to `persistence.conf`: `/ union,source=rootfs`
 * in the unlikely event that you have a partition lableled `persistence` for some other purpose, you have to choose the second menu item to disable persistence.
+
+To check that persistence worked,
+* Reboot
+* Do any operation that will change the system state (connect to a wifi network with a password, install a package, create a LinuxCNC shortcut on your desktop)
+* Reboot a second time.  If the change you made is still there, persistence is working.
+
+After enabling persistence you need to reenable updates, by creating the file `/etc/apt/sources.list.d/updates.list` as root with these contents:
+~~~~
+deb http://ftp.debian.org/debian stretch-updates main contrib non-free
+deb http://security.debian.org/debian-security stretch/updates main
+~~~~
+Failing to do this can lead to weird problems where packages are not installable via apt due to dependency problems.
+(An equivalent step is automatically done by the installer when actually installing to the hard drive, but it appears to be necessary to do it manually when using persistence)
 
 See also: [`persistence.conf(4)`](https://manpages.debian.org/stretch/live-boot-doc/persistence.conf.5.en.html)
