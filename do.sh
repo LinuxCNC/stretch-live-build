@@ -32,6 +32,7 @@ for ARCH in "$@"; do
             bash-completion openssh-server build-essential \
             nopaste mesa-utils gparted vim-gtk3 galculator" \
         -f "firmware-linux-free \
+            firmware-misc-nonfree \
             hdmi2usb-fx2-firmware nxt-firmware \
             bladerf-firmware-fx3 firmware-b43-installer \
             firmware-b43legacy-installer \
