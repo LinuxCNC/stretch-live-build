@@ -111,6 +111,11 @@ chroot ${rootdir} apt -y dist-upgrade
 chroot ${rootdir} apt -y install initramfs-tools live-boot live-config ${LWR_TASK_PACKAGES} task-laptop task-english libnss-myhostname
 chroot ${rootdir} apt -y install --no-install-recommends ${LWR_EXTRA_PACKAGES} ${LWR_FIRMWARE_PACKAGES}
 
+# modemmanager tries to open serial ports willy-nilly, but LinuxCNC
+# machines are more likely to have VFDs and Arduinos and stuff hooked
+# up there than modems.
+chroot ${rootdir} apt -y purge modemmanager
+
 # Temporary fix for #843983
 chroot ${rootdir} chmod 755 /
 
