@@ -119,6 +119,10 @@ chroot ${rootdir} apt -y purge --auto-remove modemmanager
 # Temporary fix for #843983
 chroot ${rootdir} chmod 755 /
 
+# Temporary workaround for #842422
+# https://lists.debian.org/debian-user/2017/06/msg01045.html
+ln -s /dev/null ${rootdir}/etc/systemd/network/99-default.link
+
 chroot ${rootdir} mkdir -p /etc/skel/.config/autostart
 if [ -e ${rootdir}/etc/xdg/autostart/light-locker.desktop ]; then
 chroot ${rootdir} desktop-file-install --dir=/etc/skel/.config/autostart --set-key=Hidden --set-value=true /etc/xdg/autostart/light-locker.desktop
